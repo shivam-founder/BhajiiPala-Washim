@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BhajiiPala — Fresh Vegetables Delivered</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#1a6b3a;--green-light:#2d9653;--green-pale:#e8f5ec;--orange:#f47c20;--orange-pale:#fff3e8;--cream:#faf8f3;--ink:#1a1a1a;--muted:#6b7280;--border:#e5e7eb;--red:#dc2626}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink)}
+.topbar{background:var(--green);color:#fff;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(26,107,58,.3)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.5px;cursor:pointer}.logo span{color:var(--orange)}
+.topbar-actions{display:flex;align-items:center;gap:10px}
+.cart-btn{background:var(--orange);color:#fff;border:none;border-radius:24px;padding:8px 16px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s}.cart-btn:hover{background:#e06810}
+.cart-badge{background:#fff;color:var(--orange);border-radius:50%;width:20px;height:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.auth-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:20px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}.auth-btn:hover{background:rgba(255,255,255,.25)}
+.hero{background:linear-gradient(135deg,var(--green),#0f4a27);color:#fff;padding:52px 24px 44px;text-align:center}
+.hero-tag{display:inline-block;background:rgba(244,124,32,.25);border:1px solid rgba(244,124,32,.5);color:#fbbf6e;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:500;letter-spacing:.5px;margin-bottom:14px;text-transform:uppercase}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(26px,5vw,44px);font-weight:800;line-height:1.1;margin-bottom:10px}.hero h1 span{color:var(--orange)}
+.hero p{font-size:15px;opacity:.8;margin-bottom:24px;font-weight:300}
+.hero-badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hero-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 13px;font-size:12px}
+.main{max-width:1100px;margin:0 auto;padding:28px 16px 80px}
+.filter-bar{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--border);background:#fff;border-radius:20px;padding:7px 16px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;color:var(--muted);font-weight:500}.chip:hover{border-color:var(--green);color:var(--green)}.chip.active{background:var(--green);border-color:var(--green);color:#fff}
+.section-label{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:40px}
+.card{background:#fff;border-radius:16px;padding:18px 14px 14px;border:1.5px solid var(--border);transition:all .25s;position:relative}.card:hover{border-color:var(--green-light);box-shadow:0 8px 32px rgba(0,0,0,.12);transform:translateY(-2px)}
+.card-emoji{font-size:38px;text-align:center;margin-bottom:10px;display:block}
+.card-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:2px}
+.card-hi{font-size:12px;color:var(--muted);margin-bottom:8px}
+.card-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.card-price{font-size:17px;font-weight:700;color:var(--green)}.card-unit{font-size:11px;color:var(--muted)}
+.hot-badge{position:absolute;top:9px;right:9px;background:var(--orange-pale);color:var(--orange);border-radius:7px;padding:2px 7px;font-size:10px;font-weight:600}
+.out-badge{width:100%;background:#f3f4f6;color:var(--muted);border:1.5px solid var(--border);border-radius:10px;padding:8px;font-size:12px;text-align:center;font-weight:500}
+.add-btn{width:100%;background:var(--green-pale);color:var(--green);border:1.5px solid var(--green-pale);border-radius:10px;padding:9px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}.add-btn:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.qty-ctrl{display:flex;align-items:center;gap:8px;justify-content:center;background:var(--green);border-radius:10px;padding:6px}
+.qty-btn{background:rgba(255,255,255,.2);border:none;color:#fff;width:26px;height:26px;border-radius:6px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}.qty-btn:hover{background:rgba(255,255,255,.35)}
+.qty-n{color:#fff;font-weight:700;font-size:15px;min-width:20px;text-align:center}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;backdrop-filter:blur(2px);display:none}.overlay.show{display:block}
+.drawer{position:fixed;right:0;top:0;bottom:0;width:min(420px,100vw);background:#fff;z-index:201;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s ease;box-shadow:-8px 0 40px rgba(0,0,0,.15)}.drawer.open{transform:translateX(0)}
+.drawer-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.drawer-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700}
+.close-btn{background:var(--border);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.cart-list{flex:1;overflow-y:auto;padding:14px 22px}
+.cart-item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--border)}
+.ci-info{flex:1}.ci-name{font-size:14px;font-weight:600;margin-bottom:2px}.ci-price{font-size:13px;color:var(--green);font-weight:600}
+.cq-btn{background:var(--green-pale);border:none;color:var(--green);width:26px;height:26px;border-radius:6px;font-size:16px;cursor:pointer;font-weight:700}
+.cart-footer{padding:18px 22px;border-top:1px solid var(--border);background:var(--cream)}
+.cart-row{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
+.cart-total{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-bottom:14px}
+.checkout-btn{width:100%;background:var(--green);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}.checkout-btn:hover{background:var(--green-light)}
+.modal-wrap{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}.modal-wrap.show{display:flex}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:440px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:slideUp .3s ease;position:relative}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-logo{text-align:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--green);margin-bottom:6px}.modal-logo span{color:var(--orange)}
+.modal-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:22px}
+.field{margin-bottom:14px}.field label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.field input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:11px 13px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;background:var(--cream);color:var(--ink)}.field input:focus{border-color:var(--green);background:#fff}
+.submit-btn{width:100%;background:var(--green);color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}.submit-btn:disabled{opacity:.6;cursor:not-allowed}
+.err{background:#fef2f2;border:1px solid #fecaca;color:var(--red);border-radius:8px;padding:9px 13px;font-size:13px;margin-bottom:13px}
+#checkout-page,#success-page{display:none}
+.co-wrap{max-width:580px;margin:0 auto;padding:28px 16px 80px}
+.co-wrap h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:22px}
+.co-section{background:#fff;border-radius:16px;padding:22px;margin-bottom:18px;border:1.5px solid var(--border)}
+.co-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:14px;color:var(--green);text-transform:uppercase;letter-spacing:.5px}
+.co-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:14px}.co-item:last-child{border-bottom:none}
+.place-btn{width:100%;background:linear-gradient(135deg,var(--green),var(--green-light));color:#fff;border:none;border-radius:14px;padding:15px;font-family:'Syne',sans-serif;font-size:17px;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(26,107,58,.3);transition:all .2s}.place-btn:disabled{opacity:.6;cursor:not-allowed}
+.success-wrap{max-width:460px;margin:60px auto;text-align:center;padding:0 20px}
+.success-icon{font-size:68px;margin-bottom:16px;animation:bounce .6s ease}
+@keyframes bounce{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.success-wrap h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:10px;color:var(--green)}
+.order-id-box{background:var(--green-pale);color:var(--green);border-radius:8px;padding:5px 13px;font-size:14px;font-weight:700;display:inline-block;margin-bottom:16px}
+.cont-btn{background:var(--green);color:#fff;border:none;border-radius:12px;padding:12px 26px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:6px}
+.loading{text-align:center;padding:60px 20px;color:var(--muted)}
+.spin{display:inline-block;animation:spin 1s linear infinite;font-size:30px;margin-bottom:10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 20px;border-radius:22px;font-size:13px;z-index:999;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;transition:opacity .3s;pointer-events:none}.toast.show{opacity:1}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo" onclick="showPage('shop')">Bhajii<span>Pala</span> 🥬</div>
+  <div class="topbar-actions">
+    <span id="user-greeting" style="font-size:13px;opacity:.8;display:none"></span>
+    <button class="auth-btn" id="auth-btn" onclick="showAuth()">Login / Sign Up</button>
+    <button class="cart-btn" onclick="openCart()">🛒 Cart <span class="cart-badge" id="cart-badge" style="display:none">0</span></button>
+  </div>
+</div>
+
+<!-- SHOP PAGE -->
+<div id="shop-page">
+  <div class="hero">
+    <div class="hero-tag">🌿 Farm Fresh · Daily Delivery</div>
+    <h1>ताजी भाजी,<br/>घरपोच <span>Delivery</span></h1>
+    <p>Fresh vegetables delivered to your doorstep in 60 minutes</p>
+    <div class="hero-badges">
+      <div class="hero-badge">🚚 Free delivery above ₹200</div>
+      <div class="hero-badge">⭐ 4.8 Rating</div>
+      <div class="hero-badge">🎁 Gift on first order</div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="filter-bar">
+      <button class="chip active" onclick="setCategory('All',this)">All</button>
+      <button class="chip" onclick="setCategory('Vegetables',this)">Vegetables</button>
+      <button class="chip" onclick="setCategory('Leafy Greens',this)">Leafy Greens</button>
+      <button class="chip" onclick="setCategory('Herbs',this)">Herbs</button>
+    </div>
+    <div class="section-label">🥬 Fresh Picks</div>
+    <div class="grid" id="product-grid"><div class="loading"><div class="spin">🥬</div><br/>Loading fresh picks...</div></div>
+  </div>
+</div>
+
+<!-- CHECKOUT PAGE -->
+<div id="checkout-page">
+  <div class="co-wrap">
+    <button onclick="showPage('shop')" style="background:none;border:none;cursor:pointer;color:var(--green);font-weight:600;margin-bottom:14px;font-size:14px">← Back</button>
+    <h2>Checkout</h2>
+    <div class="co-section"><div class="co-title">📦 Order Summary</div><div id="co-items"></div><div style="display:flex;justify-content:space-between;margin-top:12px;font-weight:700;font-size:16px"><span>Total</span><span id="co-total" style="color:var(--green)"></span></div></div>
+    <div class="co-section"><div class="co-title">🏠 Delivery Address</div><div class="field"><label>Full Address</label><input id="co-address" placeholder="Building, Street, Area, City" /></div></div>
+    <div class="co-section">
+      <div class="co-title">🕐 Delivery Slot</div>
+      <label style="display:flex;align-items:center;gap:10px;padding:10px 0;cursor:pointer;border-bottom:1px solid var(--border)"><input type="radio" name="slot" value="Morning (7AM–10AM)" checked style="accent-color:var(--green)"><span style="font-size:14px">Morning (7AM–10AM)</span></label>
+      <label style="display:flex;align-items:center;gap:10px;padding:10px 0;cursor:pointer;border-bottom:1px solid var(--border)"><input type="radio" name="slot" value="Afternoon (12PM–3PM)" style="accent-color:var(--green)"><span style="font-size:14px">Afternoon (12PM–3PM)</span></label>
+      <label style="display:flex;align-items:center;gap:10px;padding:10px 0;cursor:pointer"><input type="radio" name="slot" value="Evening (5PM–8PM)" style="accent-color:var(--green)"><span style="font-size:14px">Evening (5PM–8PM)</span></label>
+    </div>
+    <button class="place-btn" id="place-btn" onclick="placeOrder()">🥬 Place Order</button>
+  </div>
+</div>
+
+<!-- SUCCESS PAGE -->
+<div id="success-page">
+  <div class="success-wrap">
+    <div class="success-icon">🎉</div>
+    <h2>Order Placed!</h2>
+    <p style="color:var(--muted);margin-bottom:14px">Fresh vegetables are on their way!</p>
+    <div class="order-id-box" id="success-order-id"></div>
+    <p style="font-size:13px;color:var(--muted);margin:14px 0">Expected delivery within 60 minutes.</p>
+    <button class="cont-btn" onclick="showPage('shop')">Continue Shopping →</button>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header"><div class="drawer-title">🛒 Your Cart</div><button class="close-btn" onclick="closeCart()">✕</button></div>
+  <div class="cart-list" id="cart-list"></div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-row"><span>Subtotal</span><span id="cf-sub"></span></div>
+    <div class="cart-row"><span>Delivery</span><span id="cf-del"></span></div>
+    <div class="cart-total"><span>Total</span><span id="cf-total"></span></div>
+    <button class="checkout-btn" onclick="goCheckout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-wrap" id="auth-modal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeAuth()" style="position:absolute;top:14px;right:14px">✕</button>
+    <div class="modal-logo">Bhajii<span>Pala</span> 🥬</div>
+    <div class="modal-sub" id="auth-sub">Login to place your order</div>
+    <div class="err" id="auth-err" style="display:none"></div>
+    <div class="field" id="name-field" style="display:none"><label>Full Name</label><input id="inp-name" placeholder="Your name" /></div>
+    <div class="field"><label>Phone Number</label><input id="inp-phone" placeholder="10-digit mobile" type="tel" onkeydown="if(event.key==='Enter')submitAuth()" /></div>
+    <button class="submit-btn" id="auth-submit-btn" onclick="submitAuth()">Continue →</button>
+    <div style="text-align:center;margin-top:13px;font-size:13px;color:var(--muted)" id="auth-switch">
+      New here? <button style="background:none;border:none;color:var(--green);font-weight:600;cursor:pointer;text-decoration:underline" onclick="switchAuthMode()">Sign up</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SB_URL="https://hagikhxjxfhgmqmzjoyn.supabase.co";
+const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhhZ2lraHhqeGZoZ21xbXpqb3luIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyOTEwODIsImV4cCI6MjA4NTg2NzA4Mn0.5Nv1heVAYNHvgVoUSmF7vXrBVCMIcO_EqAh0Zcb0jxg";
+async function sb(path,opts={}){const r=await fetch(`${SB_URL}/rest/v1/${path}`,{headers:{apikey:SB_KEY,Authorization:`Bearer ${SB_KEY}`,"Content-Type":"application/json",Prefer:opts.prefer||"return=representation",...opts.headers},...opts});const t=await r.text();if(!r.ok)throw new Error(t);return t?JSON.parse(t):null;}
+let products=[],cart=[],user=null,authMode="login",activeCategory="All";
+
+async function loadProducts(){
+  try{products=await sb("products?select=*&active=eq.true&order=created_at.asc")||[];renderGrid();}
+  catch(e){document.getElementById("product-grid").innerHTML=`<div class="loading" style="color:var(--red)">Failed to load. Check connection.</div>`;}
+}
+
+function renderGrid(){
+  const filtered=activeCategory==="All"?products:products.filter(p=>p.category===activeCategory);
+  const grid=document.getElementById("product-grid");
+  if(!filtered.length){grid.innerHTML=`<div class="loading">No products found</div>`;return;}
+  grid.innerHTML=filtered.map(p=>{
+    const qty=(cart.find(i=>i.id===p.id)||{}).qty||0;
+    return `<div class="card" id="card-${p.id}">
+      ${p.trending?`<div class="hot-badge">🔥 Hot</div>`:""}
+      <span class="card-emoji">${p.img}</span>
+      <div class="card-name">${p.name}</div>
+      <div class="card-hi">${p.name_hi||""}</div>
+      <div class="card-meta"><span class="card-price">₹${p.price}</span><span class="card-unit">${p.unit||""}</span></div>
+      ${p.stock===0?`<div class="out-badge">Out of Stock</div>`:qty===0?`<button class="add-btn" onclick="addToCart('${p.id}')">+ Add</button>`:`<div class="qty-ctrl"><button class="qty-btn" onclick="decQty('${p.id}')">−</button><span class="qty-n">${qty}</span><button class="qty-btn" onclick="incQty('${p.id}')">+</button></div>`}
+    </div>`;
+  }).join("");
+}
+
+function setCategory(cat,el){activeCategory=cat;document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));el.classList.add("active");renderGrid();}
+function addToCart(id){const p=products.find(x=>x.id===id);cart.push({...p,qty:1});updateCart();renderGrid();showToast(`${p.name} added! 🛒`);}
+function incQty(id){const i=cart.find(x=>x.id===id);if(i)i.qty++;updateCart();renderGrid();}
+function decQty(id){const i=cart.find(x=>x.id===id);if(!i)return;if(i.qty===1)cart=cart.filter(x=>x.id!==id);else i.qty--;updateCart();renderGrid();}
+
+function updateCart(){
+  const count=cart.reduce((s,i)=>s+i.qty,0);
+  const badge=document.getElementById("cart-badge");
+  badge.textContent=count;badge.style.display=count>0?"inline-flex":"none";
+  renderCartDrawer();
+}
+
+function renderCartDrawer(){
+  const list=document.getElementById("cart-list"),footer=document.getElementById("cart-footer");
+  if(!cart.length){list.innerHTML=`<div style="text-align:center;padding:60px 20px;color:var(--muted)"><div style="font-size:46px;margin-bottom:12px">🥬</div><div style="font-weight:600">Cart is empty</div></div>`;footer.style.display="none";return;}
+  list.innerHTML=cart.map(i=>`<div class="cart-item"><span style="font-size:26px">${i.img}</span><div class="ci-info"><div class="ci-name">${i.name}</div><div class="ci-price">₹${i.price*i.qty}</div></div><div style="display:flex;align-items:center;gap:7px"><button class="cq-btn" onclick="decQty('${i.id}')">−</button><span style="font-weight:700;min-width:18px;text-align:center">${i.qty}</span><button class="cq-btn" onclick="incQty('${i.id}')"
